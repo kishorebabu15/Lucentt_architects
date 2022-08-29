@@ -1,0 +1,27 @@
+{
+  "name": "lucentt_architects",
+  "version": "1.0.0",
+  "description": "Architecural Design",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kishorebabu15/Lucentt_architects.git"
+  },
+  "author": "Poluru Kishore Babu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kishorebabu15/Lucentt_architects/issues"
+  },
+  "homepage": "https://github.com/kishorebabu15/Lucentt_architects#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mongoose": "^6.5.3"
+  }
+}
