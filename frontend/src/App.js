@@ -1,92 +1,31 @@
-import "./App.css";
-import { useState, useEffect } from "react";
-import Axios from "axios";
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import Clients from './clients/clients';
+import './App.css'
 
-function App() {
-  const [ListOfClients, setListOfClients] = useState([]);
+export default function App() {
 
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState(0);
-  const [email, setEmail] = useState("");
-  const [client_address, setClient_address] = useState("");
-  const [site_information, setSite_information] = useState("");
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    Axios.get("http://localhost:8000/getClients").then((response) => {
-      setListOfClients(response.data);
-    });
-  }, []);
-
-  const createClient = () => {
-    Axios.post("http://localhost:8000/createClient", {
-      name,
-      phone,
-      email,
-      client_address,
-      site_information,
-    }).then((response) => {
-      setListOfClients([...ListOfClients, {
-        name,
-        phone,
-        email,
-        client_address,
-        site_information,
-      }]);
-    });
-  };
+  const navigateToClients = () => { navigate('/Clients') };
+  const navigateToOnGoingProjects = () => { navigate('/Clients') };
+  const navigateToCompletedProjects = () => { navigate('/Clients') };
+  const navigateToTimelines = () => { navigate('/Clients') };
+  const navigateToExpenses = () => { navigate('/Clients') };
 
   return (
-    <div className="App">
-      <div className="displayClients">
-        {ListOfClients.map((client) => {
-          return (
-            <div>
-              <h1>Name : {client.name}</h1>
-            </div>
-          );
-        })}
-      </div>
+    <div>
+      <div>
+        <button onClick={navigateToClients}>Clients</button>
+        <button onClick={navigateToOnGoingProjects}>OnGoing Projects</button>
+        <button onClick={navigateToCompletedProjects}>Completed Projects</button>
+        <button onClick={navigateToTimelines}>TimeLines</button>
+        <button onClick={navigateToExpenses}>Expenses</button>
 
-      <div className="">
-        <input
-          type="text"
-          placeholder="Enter name"
-          onChange={(event) => {
-            setName(event.target.value);
-          }}
-        />
-        <input
-          type="number"
-          placeholder="Enter Mobile no."
-          onChange={(event) => {
-            setPhone(event.target.value);
-          }} />
-        <input
-          type="text"
-          placeholder="Enter Email"
-          onChange={(event) => {
-            setEmail(event.target.value);
-          }}
-        />
-        <input
-          type="text"
-          placeholder="Enter Client Address"
-          onChange={(event) => {
-            setClient_address(event.target.value);
-          }}
-        />
-        <input
-          type="text"
-          placeholder="Enter Site Information"
-          onChange={(event) => {
-            setSite_information(event.target.value);
-          }}
-        />
-
-        <button onClick={createClient}>Create Client</button>
+        <Routes>
+          <Route path="/Clients" exact element={<Clients />} />
+        </Routes>
       </div>
     </div>
   );
 }
 
-export default App;
