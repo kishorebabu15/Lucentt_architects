@@ -3,19 +3,16 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const ClientModel = require("./models/client")
+const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const PORT = process.env.PORT || 8000;
 
+// Routes
 
-// Json -> object
-app.use(express.json())
-// allows to connect API to react
-app.use(cors());
+const clientRoutes = require("./routes/clientRoutes");
 
 // DATABASE CONNECTION
-
 mongoose.connect(process.env.DATABASE_LINK, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -25,24 +22,19 @@ mongoose.connect(process.env.DATABASE_LINK, {
     })
     .catch((error) => { console.log(error) });
 
-app.get('/getClients', (req,res) => {
-    ClientModel.find({}, (error,result) => {
-        if(error) {
-            res.json(error);
-        } else {
-            res.json(result);
-        }
-    })
-})
 
-app.post("/createClient", async (req,res) => {
-    const newClient = new ClientModel(req.body);
 
-    await newClient.save();
+// MIDDLEWARES
 
-    res.json(req.body)
-})
+// Json -> object
+app.use(express.json())
+// allows to connect API to react
+app.use(cors());
+// body-parser extracts the entire body portion of an incoming request stream and exposes it on req.body.
+// app.use(bodyParser());
 
+
+app.use('/api',clientRoutes);
 
 
 app.listen(PORT, console.log(`Server is Up and running at ${PORT}`));
