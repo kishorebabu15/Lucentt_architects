@@ -3,14 +3,11 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
 const cors = require("cors");
 
-const PORT = process.env.PORT || 8000;
-
-// Routes
-
+// My Routes
 const clientRoutes = require("./routes/clientRoutes");
+const projectRoutes = require("./routes/projectRoutes");
 
 // DATABASE CONNECTION
 mongoose.connect(process.env.DATABASE_LINK, {
@@ -23,18 +20,19 @@ mongoose.connect(process.env.DATABASE_LINK, {
     .catch((error) => { console.log(error) });
 
 
-
 // MIDDLEWARES
-
-// Json -> object
-app.use(express.json())
-// allows to connect API to react
-app.use(cors());
+app.use(express.json()) // Json -> object
+app.use(cors()); // allows to connect API to react
 // body-parser extracts the entire body portion of an incoming request stream and exposes it on req.body.
-// app.use(bodyParser());
+app.use(express.urlencoded({extended:true}));
 
 
-app.use('/api',clientRoutes);
+// My Routes
+app.use('/api', clientRoutes);
+app.use('/api', projectRoutes);
 
+// PORT
+const PORT = process.env.PORT || 8000;
 
+// Starting a Server
 app.listen(PORT, console.log(`Server is Up and running at ${PORT}`));

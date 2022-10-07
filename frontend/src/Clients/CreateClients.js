@@ -1,9 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Axios from "axios";
 
+import './CreateClients.css';
 
-const Clients = () => {
-    
+
+
+const CreateClients = () => {
+
     const [ListOfClients, setListOfClients] = useState([]);
 
     const [name, setName] = useState("");
@@ -11,13 +14,6 @@ const Clients = () => {
     const [email, setEmail] = useState("");
     const [client_address, setClient_address] = useState("");
     const [site_information, setSite_information] = useState("");
-
-    useEffect(() => {
-
-        Axios.get(`http://localhost:8000/api/getClients`).then((response) => {
-            setListOfClients(response.data);
-        });
-    }, []);
 
     const createClient = (event) => {
         Axios.post(`http://localhost:8000/api/createClient`, {
@@ -40,57 +36,61 @@ const Clients = () => {
     };
 
     return (
-        <div className="App">
-            <div className="displayClients">
-                {ListOfClients.map((client) => {
-                    return (
-                        <div>
-                            <h1>Name : {client.name}</h1>
-                        </div>
-                    );
-                })}
-            </div>
+        <div >
 
-            <div className="">
+
+            <form className="form__client-details" onSubmit={createClient}>
+
                 <input
                     type="text"
+                    required="required"
                     placeholder="Enter name"
                     onChange={(event) => {
                         setName(event.target.value);
                     }}
                 />
+
                 <input
                     type="number"
-                    placeholder="Enter Mobile no."
+                    required="required"
+                    placeholder="Enter 10 digit Mobile no."
                     onChange={(event) => {
                         setPhone(event.target.value);
                     }} />
+
                 <input
-                    type="text"
-                    placeholder="Enter Email"
+                    type="email"
+                    required="required"
+                    placeholder="Enter email"
                     onChange={(event) => {
                         setEmail(event.target.value);
                     }}
                 />
+
                 <input
                     type="text"
+                    required="required"
                     placeholder="Enter Client Address"
                     onChange={(event) => {
                         setClient_address(event.target.value);
                     }}
                 />
+
                 <input
                     type="text"
+                    required="required"
                     placeholder="Enter Site Information"
                     onChange={(event) => {
                         setSite_information(event.target.value);
                     }}
                 />
 
-                <button onClick={createClient}>Create Client</button>
-            </div>
+                <input type="submit" value="CreateClient" />
+
+            </form>
+
         </div>
     );
 }
 
-export default Clients;
+export default CreateClients;

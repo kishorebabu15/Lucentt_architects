@@ -17,3 +17,7 @@ exports.createClient = (req, res) => {
 
     res.json(req.body)
 }
+
+exports.updateClientDetails = (req, res) => {
+
+}
