@@ -1,3 +1,3 @@
-# luccent_architects
+# Luccent_architects
 LA | Architectural Designer
 
